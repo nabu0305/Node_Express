@@ -45,45 +45,9 @@ app.get('/page/:pageId',function(request,response){
           });
         });
 });
-app.listen(3000, () => {
-  console.log('Example app listening on port 3000!');
-});
-/*var http = require('http');
-var fs = require('fs');
-var url = require('url');
-var qs = require('querystring');
-var template = require('./lib/template.js');
-var path = require('path');
-var sanitizeHtml = require('sanitize-html');
 
-var app = http.createServer(function(request,response){
-    
-      } else {
-        fs.readdir('./data', function(error, filelist){
-          var filteredId = path.parse(queryData.id).base;
-          fs.readFile(`data/${filteredId}`, 'utf8', function(err, description){
-            var title = queryData.id;
-            var sanitizedTitle = sanitizeHtml(title);
-            var sanitizedDescription = sanitizeHtml(description, {
-              allowedTags:['h1']
-            });
-            var list = template.list(filelist);
-            var html = template.HTML(sanitizedTitle, list,
-              `<h2>${sanitizedTitle}</h2>${sanitizedDescription}`,
-              ` <a href="/create">create</a>
-                <a href="/update?id=${sanitizedTitle}">update</a>
-                <form action="delete_process" method="post">
-                  <input type="hidden" name="id" value="${sanitizedTitle}">
-                  <input type="submit" value="delete">
-                </form>`
-            );
-            response.writeHead(200);
-            response.end(html);
-          });
-        });
-      }
-    } else if(pathname === '/create'){
-      fs.readdir('./data', function(error, filelist){
+app.get('/create',function(request,response){
+	fs.readdir('./data', function(error, filelist){
         var title = 'WEB - create';
         var list = template.list(filelist);
         var html = template.HTML(title, list, `
@@ -97,11 +61,12 @@ var app = http.createServer(function(request,response){
             </p>
           </form>
         `, '');
-        response.writeHead(200);
-        response.end(html);
+        response.send(html);
       });
-    } else if(pathname === '/create_process'){
-      var body = '';
+});
+
+app.post('/create_process',function(request,response){
+	var body = '';
       request.on('data', function(data){
           body = body + data;
       });
@@ -114,6 +79,22 @@ var app = http.createServer(function(request,response){
             response.end();
           })
       });
+});
+app.listen(3000, () => {
+  console.log('Example app listening on port 3000!');
+});
+/*var http = require('http');
+var fs = require('fs');
+var url = require('url');
+var qs = require('querystring');
+var template = require('./lib/template.js');
+var path = require('path');
+var sanitizeHtml = require('sanitize-html');
+
+var app = http.createServer(function(request,response){
+    
+       else if(pathname === '/create_process'){
+      
     } else if(pathname === '/update'){
       fs.readdir('./data', function(error, filelist){
         var filteredId = path.parse(queryData.id).base;
