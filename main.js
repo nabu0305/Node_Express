@@ -35,7 +35,7 @@ app.get('/page/:pageId',function(request,response){
             var html = template.HTML(sanitizedTitle, list,
               `<h2>${sanitizedTitle}</h2>${sanitizedDescription}`,
               ` <a href="/create">create</a>
-                <a href="/update?id=${sanitizedTitle}">update</a>
+                <a href="/update/${sanitizedTitle}">update</a>
                 <form action="delete_process" method="post">
                   <input type="hidden" name="id" value="${sanitizedTitle}">
                   <input type="submit" value="delete">
@@ -80,26 +80,12 @@ app.post('/create_process',function(request,response){
           })
       });
 });
-app.listen(3000, () => {
-  console.log('Example app listening on port 3000!');
-});
-/*var http = require('http');
-var fs = require('fs');
-var url = require('url');
-var qs = require('querystring');
-var template = require('./lib/template.js');
-var path = require('path');
-var sanitizeHtml = require('sanitize-html');
 
-var app = http.createServer(function(request,response){
-    
-       else if(pathname === '/create_process'){
-      
-    } else if(pathname === '/update'){
-      fs.readdir('./data', function(error, filelist){
-        var filteredId = path.parse(queryData.id).base;
+app.get('/update/:pageId',function(request,response){
+	fs.readdir('./data', function(error, filelist){
+        var filteredId = path.parse(request.params.pageId).base;
         fs.readFile(`data/${filteredId}`, 'utf8', function(err, description){
-          var title = queryData.id;
+         var title = request.params.pageId;
           var list = template.list(filelist);
           var html = template.HTML(title, list,
             `
@@ -116,12 +102,13 @@ var app = http.createServer(function(request,response){
             `,
             `<a href="/create">create</a> <a href="/update?id=${title}">update</a>`
           );
-          response.writeHead(200);
-          response.end(html);
+          response.send(html);
         });
       });
-    } else if(pathname === '/update_process'){
-      var body = '';
+});
+
+app.post('update_process',function(request,response){
+	var body = '';
       request.on('data', function(data){
           body = body + data;
       });
@@ -137,6 +124,22 @@ var app = http.createServer(function(request,response){
             })
           });
       });
+});
+app.listen(3000, () => {
+  console.log('Example app listening on port 3000!');
+});
+/*var http = require('http');
+var fs = require('fs');
+var url = require('url');
+var qs = require('querystring');
+var template = require('./lib/template.js');
+var path = require('path');
+var sanitizeHtml = require('sanitize-html');
+
+var app = http.createServer(function(request,response){
+    
+        else if(pathname === '/update_process'){
+      
     } else if(pathname === '/delete_process'){
       var body = '';
       request.on('data', function(data){
