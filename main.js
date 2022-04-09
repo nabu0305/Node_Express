@@ -8,8 +8,10 @@ var template = require('./lib/template.js');
 var path = require('path');
 var sanitizeHtml = require('sanitize-html');
 var bodyParser = require('body-parser');
+var compression = require('compression');
 
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(compression());
 
 app.get('/',function(request,response){
 	fs.readdir('./data', function(error, filelist){
