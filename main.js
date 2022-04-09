@@ -7,6 +7,9 @@ var bodyParser = require('body-parser');
 var sanitizeHtml = require('sanitize-html');
 var compression = require('compression')
 var template = require('./lib/template.js');
+const helmet = require('helmet')
+app.use(helmet());
+
 var topicRouter = require('./routes/topic.js');
 var indexRouter = require('./routes/index.js');
 app.use(express.static('public'));
