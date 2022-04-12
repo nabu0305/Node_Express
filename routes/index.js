@@ -16,4 +16,10 @@ router.get('/', function(request, response) {
   response.send(html);
 });
 
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+
+router.use('/pages.js', require('./pages.js'));
+
 module.exports = router;
