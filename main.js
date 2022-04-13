@@ -9,11 +9,10 @@ var compression = require('compression')
 var template = require('./lib/template.js');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
-var connect = require('./Schema');
-
-connect();
+const User = require('./Schemas/pages.js');
 require('./db.js');
-
+connect();
+  
 
 app.use(helmet());	
 var topicRouter = require('./routes/topic.js');
