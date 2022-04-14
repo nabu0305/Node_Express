@@ -2,9 +2,8 @@ var express = require('express');
 var router = express.Router();
 var template = require('../lib/template.js');
 
-router.get('/', function(request, response) { 
-  var title = 'Welcome';
-  var description = 'Hello, Node.js';
+router.get('/', (request, response)=> { 
+  const Page = require("../model/page.js");
   var list = template.list(request.list);
   var html = template.HTML(title, list,
     `
@@ -13,13 +12,12 @@ router.get('/', function(request, response) {
     `,
     `<a href="/topic/create">create</a>`
   ); 
-  response.send(html);
+  const new_page = new Page({ 
+		title :'Welcome',
+   		description: 'Hello, Node.js',
+	    list : list,
+	    html : html,
+  });
+  response.send(new_page);
 });
-
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-router.use('/pages.js', require('./pages.js'));
-
 module.exports = router;
