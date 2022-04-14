@@ -9,9 +9,8 @@ var compression = require('compression')
 var template = require('./lib/template.js');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
-const User = require('./Schemas/pages.js');
-require('./db.js');
-connect();
+// const User = require('./Schema/pages.js');
+// require('./db.js');
   
 
 app.use(helmet());	
