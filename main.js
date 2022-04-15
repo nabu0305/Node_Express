@@ -14,12 +14,11 @@ app.use(helmet());
 var topicRouter = require('./routes/topic.js');
 var indexRouter = require('./routes/index.js');
 
-app.use('/topic', topicRouter);
-app.use('/', indexRouter);
+
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(compression());
-
+//https://opentutorials.org/course/3370/21423
 app.get('*', function(request, response, next){
   fs.readdir('./data', function(error, filelist){
     request.list = filelist;
@@ -74,7 +73,8 @@ app.use("/user/:id", async (req, res) => {
 	}
 	res.status(200).send(data_view_object)
 })
-
+app.use('/', indexRouter);
+app.use('/topic', topicRouter);
 app.use(function(req, res, next) {
   res.status(404).send('Sorry cant find that!');
 });

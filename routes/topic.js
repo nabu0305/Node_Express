@@ -7,7 +7,7 @@ var template = require('../lib/template.js');
  
 router.get('/create', function(request, response){
     var title = 'WEB - create';
-    var list = template.list(request.list);
+    var list = template.list(filelist);
     var html = template.HTML(title, list, `
       <form action="/topic/create_process" method="post">
         <p><input type="text" name="title" placeholder="title"></p>
@@ -35,7 +35,7 @@ router.get('/create', function(request, response){
     var filteredId = path.parse(request.params.pageId).base;
     fs.readFile(`data/${filteredId}`, 'utf8', function(err, description){
       var title = request.params.pageId;
-      var list = template.list(request.list);
+      var list = template.list(filelist);
       var html = template.HTML(title, list,
         `
         <form action="/topic/update_process" method="post">
