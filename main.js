@@ -13,7 +13,7 @@ const url = 'mongodb+srv://nabu:kim310@cluster0.b9bou.mongodb.net/myFirstDatabas
 app.use(helmet());	
 var topicRouter = require('./routes/topic.js');
 var indexRouter = require('./routes/index.js');
-
+//https://juni-dev-log.tistory.com/68
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));

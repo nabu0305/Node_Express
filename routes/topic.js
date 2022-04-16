@@ -39,18 +39,16 @@ router.get('/create', function(request, response){
 	PageModel
     .save()
     .then(newPage => {
-      console.log("Create 완료");
-      response.status(200).json({
-        message: "Create success",
-        data: {
-          post: newPage
-        }
+      fs.writeFile(`data/${PageModel.title}`, PageModel.description, 'utf8', function(err){
+      	response.redirect(`/topic/${PageModel.title}`);
       });
+      
     })
     .catch(err => {
       response.status(500).json({
         message: err
       });
+	
     });
 
    
@@ -124,6 +122,5 @@ router.get('/create', function(request, response){
       }
     });
   });
-
   })
   module.exports = router;
