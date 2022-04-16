@@ -45,34 +45,6 @@ mongoConnection()
 
 
 
-app.use("/create/user", async (req, res) => {
-	const User = require("./model/user.js");
-	const new_user = new User({ 
-		name: 'Aaron',
-		age: '28',
-		password: '123',
-		address: {
-			street: "전지단",
-			postalCode: "213123"
-		}
-	});
-	try {
-		await new_user.save()
-	} catch(error) {
-		console.error(error)
-	}
-	res.status(200).send({status: "ok"})
-})
-
-app.use("/user/:id", async (req, res) => {
-	const User = require("./model/user.js");
-	const found_user = await User.findById(req.params.id).exec();
-	const data_view_object = {
-		name: found_user.name,
-		age: Number(found_user.age)
-	}
-	res.status(200).send(data_view_object)
-})
 app.use('/', indexRouter);
 app.use('/topic', topicRouter);
 app.use(function(req, res, next) {
